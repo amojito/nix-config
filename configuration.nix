@@ -115,6 +115,9 @@
       enable = true;
       userName = "Amaury";
       userEmail = "amaury.jaffrain@gmail.com";
+      extraConfig = {
+        core.editor = "emacs -nw";
+      };
     };
     
     programs.bash.enable = true;
