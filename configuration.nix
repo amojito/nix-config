@@ -53,6 +53,11 @@
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
   
+  # Enable XRDP
+  services.xrdp.enable = true;
+  services.xrdp.defaultWindowManager = "startplasma-x11";
+  services.xrdp.openFirewall = true;
+
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
@@ -101,7 +106,6 @@
     # Now you can use full HM modules:
     programs.emacs = {
       enable = true;
-      package = pkgs.emacs-nox;
       extraPackages = epkgs: [
         epkgs.nix-mode
       ];
@@ -147,7 +151,7 @@
   };
   
   services.qemuGuest.enable = true;
-  
+
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
