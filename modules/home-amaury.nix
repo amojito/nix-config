@@ -8,6 +8,7 @@
       kdePackages.kate
       neofetch
       htop
+      tree
     ];
 
     programs.emacs = {

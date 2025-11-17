@@ -18,6 +18,20 @@
   boot.loader.grub.device = "/dev/sda";
   boot.loader.grub.useOSProber = true;
 
+  # Send kernel messages + login prompt to serial
+  boot.kernelParams = [
+    "console=tty0"                 # keep normal console
+    "console=ttyS0,115200n8"       # serial console for Proxmox
+  ];
+
+  # Tell GRUB to also use the serial port
+  boot.loader.grub.extraConfig = ''
+     serial --speed=115200 --unit=0 --word=8 --parity=no --stop=1
+     terminal_input serial console
+     terminal_output serial console
+  '';
+
+
   # Time & locale.
   time.timeZone = "America/Los_Angeles";
 
@@ -47,5 +61,3 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.05"; # Did you read the comment?
 }
-
-  
