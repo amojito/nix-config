@@ -11,6 +11,7 @@
     ./modules/services.nix
     ./modules/users.nix
     ./modules/home-amaury.nix
+    ./modules/fileserver.nix
   ];
 
   # Bootloader.
