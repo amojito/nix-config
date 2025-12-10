@@ -2,13 +2,13 @@
 
 {
   imports = [
-    ../hardware-duck.nix
+    ../hardware/duck.nix
     ../modules/networking.nix
     ../modules/desktop.nix
     ../modules/sound.nix
     ../modules/services.nix
     ../modules/users.nix
-    ../modules/home-amaury.nix
+    ../home/amaury.nix
     ../modules/time-locale.nix
   ];
 
