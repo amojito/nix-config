@@ -9,6 +9,4 @@
     };
   };
 
-  services.qemuGuest.enable = true;
-
 }

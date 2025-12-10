@@ -2,7 +2,7 @@
 
 {
   home-manager.users.amaury = { pkgs, ... }: {
-    home.stateVersion = "25.05";
+    home.stateVersion = "24.11";
 
     home.packages = with pkgs; [
       kdePackages.kate
