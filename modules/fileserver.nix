@@ -11,8 +11,8 @@
 
   #### Firewall for SMB ####
 
-  networking.firewall.allowedTCPPorts = [ 139 445 ];
-  networking.firewall.allowedUDPPorts = [ 137 138 ];
+  networking.firewall.allowedTCPPorts = [ 445 ];
+  networking.firewall.allowedUDPPorts = [ ];
 
   #### Samba server ####
 
@@ -30,7 +30,9 @@
         "map to guest"   = "Bad User";
         "encrypt passwords" = "yes";
 
-        # macOS friendliness + recycle bin
+        "disable netbios" = "yes";
+        "smb ports"       = "445";
+
         "vfs objects"    = "catia fruit streams_xattr recycle";
         "fruit:aapl"     = "yes";
         "fruit:encoding" = "native";
@@ -38,13 +40,14 @@
         "fruit:resource" = "stream";
         "ea support"     = "yes";
 
-        "recycle:touch"      = "yes";
-        "recycle:keeptree"   = "yes";
-        "recycle:versions"   = "yes";
+        "recycle:touch" = "yes";
+        "recycle:keeptree" = "yes";
+        "recycle:versions" = "yes";
         "recycle:exclude_dir" = "tmp quarantine";
+        
       };
 
-      # This is your [archive] share
+      # This is the [archive] share
       "archive" = {
         "path"          = "/mnt/archive";
         "comment"       = "Photo & data archive";
@@ -58,26 +61,17 @@
     };
   };
 
-  #### Avahi / mDNS so macOS gives you a nice icon ####
+  #### Avahi / mDNS for macOS 
 
-  services.avahi = {
-    enable = true;
-    nssmdns4 = true;
-    publish = {
-      enable = true;
-      userServices = true;
-    };
-
-    extraServiceFiles."smb.service" = ''
+  services.avahi.extraServiceFiles."smb.service" = ''
       <?xml version="1.0" standalone='no'?>
       <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
       <service-group>
-       <name replace-wildcards="yes">%h</name>
+       <name>NIX-FILESERVER</name>
        <service>
          <type>_smb._tcp</type>
          <port>445</port>
        </service>
       </service-group>
     '';
-  };
 }
