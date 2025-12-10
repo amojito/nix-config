@@ -1,16 +1,24 @@
 { config, pkgs, ... }:
 
 {
-  home-manager.users.amaury = { pkgs, ... }: {
-    home.stateVersion = "24.11";
+  home-manager.users.amaury = { pkgs, ... }:
+    let
+      commonPackages = with pkgs; [
+        neofetch
+        htop
+        tree
+        nil
+      ];
 
-    home.packages = with pkgs; [
-      kdePackages.kate
-      neofetch
-      htop
-      tree
-      nil
-    ];
+      linuxPackages = with pkgs; [
+        kdePackages.kate
+      ];
+    in {
+      home.stateVersion = "24.11";
+
+      home.packages =
+        commonPackages
+        ++ pkgs.lib.optionals pkgs.stdenv.isLinux linuxPackages;
 
     programs.emacs = {
       enable = true;

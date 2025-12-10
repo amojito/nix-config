@@ -4,19 +4,25 @@
   inputs = {
     # Pin to current stable until the 25.05 branch is cut.
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-24.11-darwin";
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin/nix-darwin-24.11";
+      inputs.nixpkgs.follows = "nixpkgs-darwin";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }:
+  outputs = { self, nixpkgs, nixpkgs-darwin, home-manager, nix-darwin, ... }:
     let
-      system = "x86_64-linux";
+      linuxSystem = "x86_64-linux";
+      darwinSystem = "aarch64-darwin";
     in {
       nixosConfigurations = {
         duck = nixpkgs.lib.nixosSystem {
-          inherit system;
+          system = linuxSystem;
           modules = [
             ./hosts/duck.nix
             home-manager.nixosModules.home-manager
@@ -24,10 +30,24 @@
         };
 
         raven = nixpkgs.lib.nixosSystem {
-          inherit system;
+          system = linuxSystem;
           modules = [
             ./hosts/raven.nix
             home-manager.nixosModules.home-manager
+          ];
+        };
+      };
+
+      darwinConfigurations = {
+        macbook = nix-darwin.lib.darwinSystem {
+          system = darwinSystem;
+          modules = [
+            ./hosts/macbook.nix
+            home-manager.darwinModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+            }
           ];
         };
       };
