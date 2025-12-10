@@ -1,8 +1,39 @@
 { config, pkgs, ... }:
 
 {
-  #### Mount /bay/archive from Proxmox via virtiofs ####
+  imports = [
+    ../hardware/duck.nix
+    ../modules/networking.nix
+    ../modules/desktop.nix
+    ../modules/sound.nix
+    ../modules/services.nix
+    ../modules/users.nix
+    ../home/amaury.nix
+    ../modules/time-locale.nix
+  ];
 
+  networking.hostName = "duck";
+
+  nixpkgs.config.allowUnfree = true;
+
+  services.qemuGuest.enable = true;
+
+  boot.loader.grub.enable = true;
+  boot.loader.grub.device = "/dev/sda";
+  boot.loader.grub.useOSProber = true;
+  boot.kernelParams = [
+    "console=tty0"
+    "console=ttyS0,115200n8"
+  ];
+  boot.loader.grub.extraConfig = ''
+     serial --speed=115200 --unit=0 --word=8 --parity=no --stop=1
+     terminal_input serial console
+     terminal_output serial console
+  '';
+
+  system.stateVersion = "25.05";
+
+  #### Mount /bay/archive from Proxmox via virtiofs ####
   fileSystems."/mnt/archive" = {
     device = "archive";   # virtiofs dirid from Proxmox
     fsType = "virtiofs";
@@ -15,7 +46,6 @@
   networking.firewall.allowedUDPPorts = [ ];
 
   #### Samba server ####
-
   services.samba = {
     enable = true;
     openFirewall = true;
@@ -60,8 +90,6 @@
       };
     };
   };
-
-  #### Avahi / mDNS for macOS 
 
   services.avahi.extraServiceFiles."smb.service" = ''
       <?xml version="1.0" standalone='no'?>

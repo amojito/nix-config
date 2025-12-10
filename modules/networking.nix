@@ -1,11 +1,9 @@
 { config, pkgs, ... }:
 
 {
-  networking.hostName = "nixos";
-  
   # Enable networking
   networking.networkmanager.enable = true;
-  
+
   # Firewall: keep default for now.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];

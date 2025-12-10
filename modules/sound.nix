@@ -3,7 +3,7 @@
 {
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
-  
+
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -12,4 +12,4 @@
     # jack.enable = true; # if you need it later
   };
 }
-  
+
