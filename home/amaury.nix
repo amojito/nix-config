@@ -3,22 +3,44 @@
 {
   home-manager.users.amaury = { pkgs, config, ... }:
     let
-      commonPackages = with pkgs; [
-        neofetch
-        htop
-        tree
-        nil
-      ];
-
-      linuxPackages = with pkgs; [
-        kdePackages.kate
-      ];
+      inherit (pkgs) lib;
     in {
       home.stateVersion = "24.11";
 
       home.packages =
-        commonPackages
-        ++ pkgs.lib.optionals pkgs.stdenv.isLinux linuxPackages;
+        (with pkgs; [
+          # Base CLI
+          neofetch
+          htop
+          tree
+          watch
+          rsync
+          jq
+
+          # Python
+          pyenv
+
+          # Networking
+          nmap
+          iperf3
+          mosh
+
+          # Media
+          yt-dlp
+          kepubify
+
+          # Fun
+          cmatrix
+          lolcat
+          sl
+
+          # Developement
+          postgresql_14
+        ])
+        ++ lib.optionals pkgs.stdenv.isLinux (with pkgs; [
+          # Linux-only
+          kdePackages.kate
+        ]);
 
     programs.emacs = {
       enable = true;
