@@ -2,7 +2,6 @@
   description = "NixOS configuration for Amaury with home-manager";
 
   inputs = {
-    # Pin to current stable until the 25.05 branch is cut.
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
     nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-24.11-darwin";
     home-manager = {
@@ -19,6 +18,7 @@
     let
       linuxSystem = "x86_64-linux";
       darwinSystem = "aarch64-darwin";
+      workOverlays = import ./overlays/ml.nix;
     in {
       nixosConfigurations = {
         duck = nixpkgs.lib.nixosSystem {
@@ -42,6 +42,7 @@
         macbook = nix-darwin.lib.darwinSystem {
           system = darwinSystem;
           modules = [
+            { nixpkgs.overlays = workOverlays; }
             ./hosts/macbook.nix
             home-manager.darwinModules.home-manager
             {

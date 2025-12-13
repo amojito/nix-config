@@ -3,6 +3,7 @@
 {
   imports = [
     ../home/amaury.nix
+    ../home/work.nix
   ];
 
   networking.hostName = "amaury-macbook-pro";

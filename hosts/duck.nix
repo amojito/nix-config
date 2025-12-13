@@ -74,7 +74,7 @@
         "recycle:keeptree" = "yes";
         "recycle:versions" = "yes";
         "recycle:exclude_dir" = "tmp quarantine";
-        
+
       };
 
       # This is the [archive] share
