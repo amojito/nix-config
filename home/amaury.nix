@@ -34,8 +34,6 @@
           lolcat
           sl
 
-          # Developement
-          postgresql_14
         ])
         ++ lib.optionals pkgs.stdenv.isLinux (with pkgs; [
           # Linux-only

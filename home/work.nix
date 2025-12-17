@@ -2,6 +2,9 @@
 
 {
   home-manager.users.amaury = { pkgs, lib, ... }: {
-    home.packages = lib.mkAfter [ pkgs.dot ];
+    home.packages = lib.mkAfter (with pkgs; [
+          dot
+          postgresql
+        ]);
   };
 }
