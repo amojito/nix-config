@@ -3,7 +3,7 @@
 {
   imports = [
     ../home/amaury.nix
-    ../home/work.nix
+    # ../home/work.nix
   ];
 
   networking.hostName = "amaury-macbook-pro";
@@ -12,10 +12,9 @@
     home = "/Users/amaury";
   };
 
-  services.nix-daemon.enable = true;
   programs.zsh.enable = true;
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.enable = false;
 
   system.stateVersion = 5;
 }

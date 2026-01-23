@@ -6,7 +6,7 @@
       inherit (pkgs) lib;
     in {
       home.stateVersion = "24.11";
-
+      
       home.packages =
         (with pkgs; [
           # Base CLI
@@ -16,15 +16,15 @@
           watch
           rsync
           jq
-
+          
           # Python
           pyenv
-
+          
           # Networking
           nmap
           iperf3
           mosh
-
+          
           # Media
           yt-dlp
           kepubify
