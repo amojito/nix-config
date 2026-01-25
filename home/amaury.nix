@@ -5,6 +5,12 @@
     let
       inherit (pkgs) lib;
     in {
+      imports = [
+        ./awscli.nix
+        ./git.nix
+        ./vscode.nix
+      ];
+
       home.stateVersion = "25.11";
 
       home.packages =
@@ -19,7 +25,7 @@
           claude-code
 
           # Development
-          nodejs_22  # Required for Claude Code and VS Code extensions
+          nodejs_22
 
           # Python
           pyenv
@@ -43,89 +49,11 @@
           lolcat
           sl
 
-          # Editor
-          vscode
-
         ])
         ++ lib.optionals pkgs.stdenv.isLinux (with pkgs; [
           # Linux-only
           kdePackages.kate
         ]);
-
-    programs.awscli = {
-      enable = true;
-      settings = {
-        "sso-session mli" = {
-          sso_start_url = "https://d-92670fa2ad.awsapps.com/start#/";
-          sso_region = "us-west-2";
-          sso_registration_scopes = "sso:account:access";
-        };
-
-        "profile buildmatrix" = {
-          sso_session = "mli";
-          sso_account_id = "051826710928";
-          sso_role_name = "CICDReadOnly";
-          region = "us-west-2";
-          cli_pager = "";
-        };
-
-        "profile buildmatrix-sandbox" = {
-          sso_session = "mli";
-          sso_account_id = "180294176216";
-          sso_role_name = "DevPowerUserAccess";
-          region = "us-west-2";
-          cli_pager = "";
-        };
-
-        "profile andor" = {
-          sso_session = "mli";
-          sso_account_id = "195275634322";
-          sso_role_name = "DevPowerUserAccess";
-          region = "us-west-2";
-          cli_pager = "";
-        };
-
-        "profile andor-ro" = {
-          sso_session = "mli";
-          sso_account_id = "195275634322";
-          sso_role_name = "CustomerAccountReadOnlyAccess";
-          region = "us-west-2";
-          cli_pager = "";
-        };
-
-        "profile korra-sandbox" = {
-          sso_session = "mli";
-          sso_account_id = "418484241502";
-          sso_role_name = "DevPowerUserAccess";
-          region = "us-west-2";
-          cli_pager = "";
-        };
-
-        "profile pentest" = {
-          sso_session = "mli";
-          sso_account_id = "588922096474";
-          sso_role_name = "DevPowerUserAccess";
-          region = "us-west-2";
-          cli_pager = "";
-        };
-
-        "profile devone" = {
-          sso_session = "mli";
-          sso_account_id = "251326346975";
-          sso_role_name = "DevPowerUserAccess";
-          region = "us-west-2";
-          cli_pager = "";
-        };
-
-        "profile devtwo" = {
-          sso_session = "mli";
-          sso_account_id = "767067015463";
-          sso_role_name = "DevPowerUserAccess";
-          region = "us-west-2";
-          cli_pager = "";
-        };
-      };
-    };
 
     programs.emacs = {
       enable = true;
@@ -164,23 +92,6 @@
       };
     };
 
-    programs.git = {
-      enable = true;
-      settings = {
-        user = {
-          name = "Amaury";
-          email = "amaury.jaffrain@gmail.com";
-        };
-        core.editor = "emacs -nw";
-      };
-      includes = [
-        {
-          path = "${config.home.homeDirectory}/.config/git/work.gitconfig";
-          condition = "gitdir:${config.home.homeDirectory}/Documents/ml/";
-        }
-      ];
-    };
-
     programs.zsh = {
       enable = true;
 
@@ -207,21 +118,6 @@
         theme = "robbyrussell";
         plugins = ["git" "aws"];
       };
-    };
-
-    home.file.".config/git/work.gitconfig" = {
-      text = ''
-        [user]
-          name = Amaury Jaffrain
-          email = amaury@multiplylabs.com
-          signingkey = ~/.ssh/id_ed25519_work.pub
-        [core]
-          sshCommand = ssh -i ~/.ssh/id_ed25519_work
-        [gpg]
-          format = ssh
-        [commit]
-          gpgsign = true
-      '';
     };
 
   };
