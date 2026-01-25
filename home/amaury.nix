@@ -6,6 +6,7 @@
       inherit (pkgs) lib;
     in {
       imports = [
+        ./alacritty.nix
         ./awscli.nix
         ./git.nix
         ./vscode.nix
