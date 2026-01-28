@@ -10,6 +10,7 @@
         ./awscli.nix
         ./git.nix
         ./vscode.nix
+        ./database.nix
       ];
 
       home.stateVersion = "25.11";
@@ -30,11 +31,6 @@
 
           # Python
           pyenv
-
-          # Database
-          postgresql.pg_config
-          openssl
-          openssl.dev
 
           # Networking
           nmap
@@ -105,10 +101,6 @@
 
       # FIXME: Define the full zshrc in git
       initContent = ''
-        # Set OpenSSL paths for compiling Python packages
-        export LDFLAGS="-L${pkgs.openssl.out}/lib"
-        export CPPFLAGS="-I${pkgs.openssl.dev}/include"
-
         if [ -f "${config.home.homeDirectory}/.zshrc.local" ]; then
           source "${config.home.homeDirectory}/.zshrc.local"
         fi
