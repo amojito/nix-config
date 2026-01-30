@@ -8,6 +8,7 @@
       imports = [
         ./alacritty.nix
         ./awscli.nix
+        ./emacs.nix
         ./git.nix
         ./vscode.nix
         ./database.nix
@@ -51,13 +52,6 @@
           # Linux-only
           kdePackages.kate
         ]);
-
-    programs.emacs = {
-      enable = true;
-      extraPackages = epkgs: [
-        epkgs.nix-mode
-      ];
-    };
 
     programs.firefox = {
       enable = true;
