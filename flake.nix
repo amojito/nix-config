@@ -47,6 +47,15 @@
         };
       };
 
+      homeConfigurations = {
+        monarch = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.${linuxSystem};
+          modules = [
+            ./home/monarch.nix
+          ];
+        };
+      };
+
       darwinConfigurations = {
         macbook = nix-darwin.lib.darwinSystem {
           system = darwinSystem;
