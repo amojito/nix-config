@@ -89,6 +89,10 @@
       enableCompletion = true;
       autosuggestion.enable = true;
 
+      sessionVariables = {
+        PAGER = "less -FR";
+      };
+
       shellAliases = {
         dot = "/Users/amaury/Documents/ml/dot/.venv/bin/dot";
       };
