@@ -22,7 +22,6 @@
     watch
     rsync
     jq
-    claude-code
 
     # Development
     nodejs_22
