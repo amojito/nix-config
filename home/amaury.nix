@@ -6,10 +6,12 @@
       inherit (pkgs) lib;
     in {
       imports = [
+        ./base.nix
         ./alacritty.nix
         ./awscli.nix
         ./emacs.nix
         ./git.nix
+        ./git-work.nix
         ./vscode.nix
         ./database.nix
       ];
@@ -91,6 +93,7 @@
 
       sessionVariables = {
         PAGER = "less -FR";
+        PATH = "$HOME/.local/bin:$PATH";
       };
 
       shellAliases = {

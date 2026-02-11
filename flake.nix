@@ -27,7 +27,6 @@
     let
       linuxSystem = "x86_64-linux";
       darwinSystem = "aarch64-darwin";
-      workOverlays = import ./overlays/ml.nix;
     in {
       nixosConfigurations = {
         duck = nixpkgs.lib.nixosSystem {
@@ -42,6 +41,14 @@
           system = linuxSystem;
           modules = [
             ./hosts/raven.nix
+            home-manager.nixosModules.home-manager
+          ];
+        };
+
+        sparrow = nixpkgs.lib.nixosSystem {
+          system = linuxSystem;
+          modules = [
+            ./hosts/sparrow.nix
             home-manager.nixosModules.home-manager
           ];
         };
@@ -60,7 +67,6 @@
         macbook = nix-darwin.lib.darwinSystem {
           system = darwinSystem;
           modules = [
-            { nixpkgs.overlays = workOverlays; }
             ./hosts/macbook.nix
             home-manager.darwinModules.home-manager
             {
