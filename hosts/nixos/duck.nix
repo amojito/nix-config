@@ -2,14 +2,9 @@
 
 {
   imports = [
-    ../hardware/duck.nix
-    ../modules/networking.nix
-    ../modules/desktop.nix
-    ../modules/sound.nix
-    ../modules/services.nix
-    ../modules/users.nix
-    ../home/amaury.nix
-    ../modules/time-locale.nix
+    ../../hardware/duck.nix
+    ./default.nix
+    ../../home/amaury.nix
   ];
 
   networking.hostName = "duck";
@@ -17,6 +12,41 @@
   nixpkgs.config.allowUnfree = true;
 
   services.qemuGuest.enable = true;
+
+  # Networking
+  networking.networkmanager.enable = true;
+
+  # Desktop environment
+  services.xserver.enable = true;
+  services.displayManager.sddm.enable = true;
+  services.desktopManager.plasma6.enable = true;
+
+  # XRDP
+  services.xrdp.enable = true;
+  services.xrdp.defaultWindowManager = "startplasma-x11";
+  services.xrdp.openFirewall = true;
+
+  # Keyboard layout
+  services.xserver.xkb = {
+    layout = "us";
+    variant = "";
+  };
+
+  # Printing
+  services.printing.enable = true;
+
+  # Firefox
+  programs.firefox.enable = true;
+
+  # Avahi for service discovery
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    publish = {
+      enable = true;
+      userServices = true;
+    };
+  };
 
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/sda";

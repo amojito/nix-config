@@ -3,13 +3,11 @@
 {
   imports = [
     (modulesPath + "/virtualisation/proxmox-lxc.nix")
-    ../modules/time-locale.nix
-    ../home/sparrow.nix
+    ./default.nix
+    ../../home/sparrow.nix
   ];
 
   networking.hostName = "sparrow";
-
-  programs.zsh.enable = true;
 
   nix.settings = {
     sandbox = false;
@@ -22,26 +20,6 @@
 
   services.fstrim.enable = false; # Let Proxmox host handle fstrim
 
-  services.openssh = {
-    enable = true;
-    openFirewall = true;
-    settings = {
-      PermitRootLogin = "prohibit-password";
-      PasswordAuthentication = false;
-    };
-  };
-
-  users.users.amaury = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" ];
-    shell = pkgs.zsh;
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHt+wQARnwJ+5+64aT6mtWQiwGtjOJXu2IJdKPBz+p3o"
-    ];
-  };
-
-  security.sudo.wheelNeedsPassword = false;
-
   # Cache DNS lookups to improve performance
   services.resolved = {
     extraConfig = ''
@@ -52,7 +30,6 @@
 
   # Tailscale VPN - configured as exit node
   services.tailscale = {
-    enable = true;
     useRoutingFeatures = "server";  # Enable exit node/subnet router features
     interfaceName = "userspace-networking";  # Use userspace networking for LXC compatibility
   };

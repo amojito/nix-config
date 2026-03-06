@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   home.packages = with pkgs; [
@@ -45,13 +45,12 @@
 
     oh-my-zsh = {
       enable = true;
-      theme = "random";
       plugins = [ "git" "sudo" ];
     };
   };
 
   programs.emacs = {
     enable = true;
-    package = pkgs.emacs-nox;  # Terminal-only emacs (lighter for containers)
+    package = lib.mkDefault pkgs.emacs-nox;  # Terminal-only emacs (lighter for containers)
   };
 }

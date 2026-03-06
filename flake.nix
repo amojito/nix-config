@@ -32,7 +32,7 @@
         duck = nixpkgs.lib.nixosSystem {
           system = linuxSystem;
           modules = [
-            ./hosts/duck.nix
+            ./hosts/nixos/duck.nix
             home-manager.nixosModules.home-manager
           ];
         };
@@ -40,7 +40,7 @@
         raven = nixpkgs.lib.nixosSystem {
           system = linuxSystem;
           modules = [
-            ./hosts/raven.nix
+            ./hosts/nixos/raven.nix
             home-manager.nixosModules.home-manager
           ];
         };
@@ -48,7 +48,7 @@
         sparrow = nixpkgs.lib.nixosSystem {
           system = linuxSystem;
           modules = [
-            ./hosts/sparrow.nix
+            ./hosts/nixos/sparrow.nix
             home-manager.nixosModules.home-manager
           ];
         };
@@ -67,7 +67,7 @@
         macbook = nix-darwin.lib.darwinSystem {
           system = darwinSystem;
           modules = [
-            ./hosts/macbook.nix
+            ./hosts/darwin/macbook.nix
             home-manager.darwinModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
