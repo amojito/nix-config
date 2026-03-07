@@ -40,6 +40,10 @@
     NSGlobalDomain = {
       AppleTemperatureUnit = "Celsius";
     };
+    screencapture = {
+      target = "file";
+      location = "/Users/amaury/Screenshots";
+    };
 
 
   };
