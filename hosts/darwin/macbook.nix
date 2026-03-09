@@ -7,8 +7,6 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  networking.hostName = "amaury-macbook-pro";
-
   system.primaryUser = "amaury";
 
   users.users.amaury = {

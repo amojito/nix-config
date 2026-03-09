@@ -68,6 +68,34 @@
           system = darwinSystem;
           modules = [
             ./hosts/darwin/macbook.nix
+            { networking.hostName = "amaury-macbook-pro"; }
+            home-manager.darwinModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+            }
+            nix-homebrew.darwinModules.nix-homebrew
+            {
+              nix-homebrew = {
+                enable = true;
+                enableRosetta = true;
+                user = "amaury";
+                autoMigrate = true;
+                taps = {
+                  "homebrew/homebrew-core" = homebrew-core;
+                  "homebrew/homebrew-cask" = homebrew-cask;
+                };
+                mutableTaps = false;
+              };
+            }
+          ];
+        };
+
+        macbook-mli = nix-darwin.lib.darwinSystem {
+          system = darwinSystem;
+          modules = [
+            ./hosts/darwin/macbook.nix
+            { networking.hostName = "amaury-multiplylabs"; }
             home-manager.darwinModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
